@@ -29,7 +29,7 @@ export default function Index() {
         </header>
       </div>
 
-      <Field id="search" label="SEARCH" type="text" placeholder="Eg. Is it called gif or jif?" required={false} error="This field is required!" />
+      <Field id="search" label="SEARCH" type="text" placeholder="Eg. Is it called gif or jif?" required={false} error="This field is sexy af!" />
 
       <section className="flex flex-col items-stretch justify-start gap-6">
         <h2 className="font-bold text-lg">Trending today</h2>
