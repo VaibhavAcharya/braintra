@@ -10,6 +10,7 @@ export const ButtonSizes = {
 export const ButtonAppearances = {
   primary: "bg-teal-900/95",
   secondary: "bg-white/20",
+  liked: "bg-rose-200/75 text-rose-900"
 };
 
 function Button(
@@ -17,7 +18,7 @@ function Button(
     as: As = "button",
     children,
     size = "medium",
-    primary = false,
+    appearance = "secondary",
     className = "",
     ...otherProps
   },
@@ -29,10 +30,11 @@ function Button(
       className={[
         "font-medium rounded-lg",
         ButtonSizes[size],
-        ButtonAppearances[primary ? "primary" : "secondary"],
+        ButtonAppearances[appearance],
         HOVER_STYLES,
         FOCUS_STYLES,
         DISABLED_STYLES,
+        className
       ].join(" ")}
       {...otherProps}
     >
