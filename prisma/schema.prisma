@@ -1,0 +1,98 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email        String @unique
+  passwordHash String
+
+  name String
+
+  about    String?
+  photoUrl String?
+
+  questions     Question[]
+  questionLiked Question_Likes[]
+
+  answers         Answer[]
+  answerLiked     Answer_Likes[]
+  answerCommentes Answer_Comments[]
+}
+
+model Question {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  slug String @unique
+
+  question String
+
+  userID String
+  user   User   @relation(fields: [userID], references: [id])
+
+  answers Answer[]
+
+  likes Question_Likes[]
+}
+
+model Question_Likes {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  questionID String
+  question   Question @relation(fields: [questionID], references: [id])
+
+  userID String
+  user   User   @relation(fields: [userID], references: [id])
+}
+
+model Answer {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  answer String
+
+  userID String
+  user   User   @relation(fields: [userID], references: [id])
+
+  questionID String
+  question   Question @relation(fields: [questionID], references: [id])
+
+  likes    Answer_Likes[]
+  comments Answer_Comments[]
+}
+
+model Answer_Likes {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  answerID String
+  answer   Answer @relation(fields: [answerID], references: [id])
+
+  userID String
+  user   User   @relation(fields: [userID], references: [id])
+}
+
+model Answer_Comments {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  comment String
+
+  answerID String
+  answer   Answer @relation(fields: [answerID], references: [id])
+
+  userID String
+  user   User   @relation(fields: [userID], references: [id])
+}
