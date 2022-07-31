@@ -8,8 +8,7 @@ module.exports = {
       fontFamily: {
         sans: ["Public Sans", ...defaultTheme.fontFamily.sans],
       },
-      colors: {
-      }
+      colors: {},
     },
   },
   plugins: [],

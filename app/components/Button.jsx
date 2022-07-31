@@ -10,7 +10,7 @@ export const ButtonSizes = {
 export const ButtonAppearances = {
   primary: "bg-teal-900/95",
   secondary: "bg-white/20",
-  liked: "bg-rose-200/75 text-rose-900"
+  liked: "bg-rose-200/75 text-rose-900",
 };
 
 function Button(
@@ -34,7 +34,7 @@ function Button(
         HOVER_STYLES,
         FOCUS_STYLES,
         DISABLED_STYLES,
-        className
+        className,
       ].join(" ")}
       {...otherProps}
     >

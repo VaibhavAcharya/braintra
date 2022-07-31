@@ -1,6 +1,5 @@
 # [Braintra](https://braintra.xyz)
 
-
 Ask questions, share knowledge, debate & discuss things that matter with the world.
 
 > **Note**:

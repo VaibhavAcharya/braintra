@@ -1,10 +1,15 @@
-import { Link, useLoaderData, Form } from "@remix-run/react";
+import { Link, useLoaderData, Form, useTransition } from "@remix-run/react";
 import {
   getQuestionBySlug,
   LikeQuestion,
   unLikeQuestion,
 } from "utils/question.server";
-import { getUserId } from "utils/session.server";
+import {
+  createUserSession,
+  getUserId,
+  login,
+  register,
+} from "utils/session.server";
 import { getUserById } from "utils/user.server";
 import {
   addAnswer,
@@ -17,6 +22,7 @@ import Button from "../../components/Button";
 import Field from "../../components/Field";
 import Dialog from "~/components/Dialog";
 import { useState } from "react";
+import { db } from "utils/db.server";
 
 export async function loader({ params, request }) {
   const slug = params.slug;
@@ -38,7 +44,34 @@ export async function action({ request }) {
   const answer = formData.get("answer");
   const action = formData.get("action");
   const comment = formData.get("comment");
-  // const followUserID = formData.get("userID");
+  const email = formData.get("email");
+  const name = formData.get("name");
+  const password = formData.get("password");
+
+  if (email && action && password) {
+    if (action === "register") {
+      const userExists = await db.user.findFirst({
+        where: { email },
+      });
+      if (userExists) {
+        return { error: `User with email ${email} already exists` };
+      }
+
+      const user = await register({ email, name, password });
+      if (!user) {
+        return { error: "something went wrong while creating user" };
+      }
+      return createUserSession(user.id, "/?logged");
+    }
+
+    if (action === "login") {
+      const user = await login({ email, password });
+      if (!user) {
+        return { error: "Incorrect username or password" };
+      }
+      return createUserSession(user.id, "#");
+    }
+  }
 
   if (action) {
     if (action === "Like") {
@@ -97,6 +130,10 @@ export default function Post() {
   const loaderData = useLoaderData();
   const question = loaderData.question;
   const user = loaderData.user;
+
+  const transition = useTransition();
+  const isBusy =
+    transition.state === "loading" || transition.state === "submitting";
 
   const [login, setLogin] = useState(false);
 
@@ -176,6 +213,7 @@ export default function Post() {
                 appearance={isLiked(user.id) ? "liked" : "secondary"}
                 value={isLiked(user.id) ? "unLike" : "Like"}
                 size="small"
+                disabled={isBusy}
               >
                 {question.likes.length} likes
               </Button>
@@ -204,8 +242,9 @@ export default function Post() {
           label="ANSWER"
           type="text"
           placeholder="Eg. its gif"
+          disabled={isBusy}
         />
-        <Button type="submit" name="action" value="answer">
+        <Button type="submit" name="action" value="answer" disabled={isBusy}>
           Answer
         </Button>
       </Form>
@@ -226,7 +265,9 @@ export default function Post() {
           >
             <div className="flex flex-col items-stretch justify-start gap-1">
               <h3 className="font-bold text-xl">{answer.answer}</h3>
-              <p className="text-sm">Answered today</p>
+              <p className="text-sm">
+                {new Date(answer.createdAt).toLocaleString()}
+              </p>
             </div>
 
             <div className="flex flex-row items-center justify-start gap-2">
@@ -239,6 +280,7 @@ export default function Post() {
                     appearance={isLiked(user.id) ? "liked" : "secondary"}
                     value={isLiked(user.id) ? "answerUnLike" : "answerLike"}
                     size="small"
+                    disabled={isBusy}
                   >
                     {answer.likes.length} likes
                   </Button>
@@ -265,8 +307,14 @@ export default function Post() {
                 label="COMMENT"
                 type="text"
                 placeholder="Eg. Right!"
+                disabled={isBusy}
               />
-              <Button type="submit" name="action" value="comment">
+              <Button
+                type="submit"
+                name="action"
+                value="comment"
+                disabled={isBusy}
+              >
                 Comment
               </Button>
             </Form>

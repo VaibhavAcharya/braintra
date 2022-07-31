@@ -8,6 +8,7 @@ import {
 } from "@remix-run/react";
 
 import tailwindStylesRef from "~/styles/tailwind.css";
+import Anchor from "./components/Anchor";
 
 export const meta = () => {
   return {
@@ -92,6 +93,38 @@ export default function Root() {
 
         <div className="px-8 py-8 md:py-24 mx-auto w-[min(720px,_100%)] min-h-screen">
           <Outlet />
+
+          <footer className="text-sm pt-24 text-center text-neutral-200/80 flex flex-col items-center justify-start gap-2">
+            <p>
+              This project was build for the [
+              <Anchor href="" target="_blank" rel="noopener noreferrer">
+                PlanetScale
+              </Anchor>{" "}
+              x{" "}
+              <Anchor href="" target="_blank" rel="noopener noreferrer">
+                Hashnode
+              </Anchor>
+              ] hackathon in July 2022.
+            </p>
+            <p>
+              Launch blog published on{" "}
+              <Anchor href="..." target="_blank" rel="noopener noreferrer">
+                Hashnode
+              </Anchor>
+              .
+            </p>
+            <p>
+              Build by{" "}
+              <Anchor href="" target="_blank" rel="noopener noreferrer">
+                Vaibhav Acharya
+              </Anchor>{" "}
+              and{" "}
+              <Anchor href="" target="_blank" rel="noopener noreferrer">
+                Naman Vyas
+              </Anchor>
+              .
+            </p>
+          </footer>
         </div>
 
         <ScrollRestoration />

@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  previewFeatures = ["referentialIntegrity", "fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -44,6 +44,8 @@ model Question {
   answers Answer[]
 
   likes Question_Likes[]
+
+   @@fulltext([question])
 }
 
 model Question_Likes {

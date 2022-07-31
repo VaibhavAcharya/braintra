@@ -11,13 +11,41 @@ export async function askQuestion({ data, request }) {
   return question;
 }
 
-export async function getQuestions() {
-  const questions = await db.question.findMany({
-    include: {
-      likes: true,
-      answers: true,
-    },
-  });
+export async function getQuestions(query = null) {
+  let questions = [];
+
+  if (query) {
+    const tokens = query
+      .trim()
+      .split(" ")
+      .map(function (token) {
+        return token.trim();
+      });
+    const tokensStringWithOR = tokens.join(" ");
+
+    console.log(query, tokens, tokensStringWithOR);
+
+    questions = await db.question.findMany({
+      where: {
+        question: { contains: query },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        likes: true,
+        answers: true,
+      },
+    });
+  } else {
+    questions = await db.question.findMany({
+      include: {
+        likes: true,
+        answers: true,
+      },
+    });
+  }
+
   return questions;
 }
 

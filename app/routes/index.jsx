@@ -16,12 +16,19 @@ import Dialog from "../components/Dialog";
 import Field from "../components/Field";
 
 export async function loader({ request }) {
+  const url = new URL(request.url);
+  const searchParams = url.searchParams;
+  const searchQ = searchParams.get("q");
+
   const userId = await getUserId(request);
-  const questions = await getQuestions();
+
+  const questions = await getQuestions(searchQ);
+
   if (userId) {
     const user = getUserById(userId);
     return { user, questions };
   }
+
   return { questions };
 }
 
@@ -185,7 +192,7 @@ export default function Index() {
         </header>
       </div>
 
-      <form className="flex items-end justify-between gap-2">
+      <Form className="flex items-end justify-between gap-2">
         <Field
           id="search"
           name="q"
@@ -208,17 +215,19 @@ export default function Index() {
             />
           </svg>
         </Button>
-      </form>
+      </Form>
 
       <section className="flex flex-col items-stretch justify-start gap-6">
-        <h2 className="font-bold text-lg">Trending today</h2>
+        <h2 className="font-bold text-lg">Questions</h2>
         <div className="flex flex-col items-stretch justify-start gap-4">
           {loaderData.questions.map((question) => (
             <Link key={question.id} to={`/q/${question.slug}`}>
               <article className="p-6 bg-white/5 hover:bg-white/10 rounded-lg shadow-md transition duration-200 hover:shadow-2xl flex flex-col items-stretch justify-start gap-3">
                 <div className="flex flex-col items-stretch justify-start gap-1">
                   <h3 className="font-bold text-xl">{question.question}</h3>
-                  <p className="text-sm">Asked today</p>
+                  <p className="text-sm">
+                    Asked on {new Date(question.createdAt).toLocaleString()}
+                  </p>
                 </div>
 
                 <div className="flex flex-row items-center justify-start gap-2">
