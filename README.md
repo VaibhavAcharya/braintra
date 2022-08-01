@@ -1,4 +1,4 @@
-# [Braintra](https://braintra.xyz)
+# [Braintra](https://braintra.vercel.app)
 
 Ask questions, share knowledge, debate & discuss things that matter with the world.
 
@@ -6,7 +6,7 @@ Ask questions, share knowledge, debate & discuss things that matter with the wor
 > <br />
 > This project was build for the [PlanetScale x Hashnode](https://townhall.hashnode.com/planetscale-hackathon) hackathon in July 2022.
 > <br />
-> Launch blog published on Hashnode — [WIP]()
+> Launch blog published on Hashnode — [here](https://namanvyas.hashnode.dev/introducing-braintra-a-beautiful-qna-platform).
 
 ## Technologies used
 
@@ -14,7 +14,7 @@ Ask questions, share knowledge, debate & discuss things that matter with the wor
 - [Tailwind](https://tailwindcss.com)
 - [PlanetScale](https://planetscale.com)
 - [Prisma](https://prisma.io)
-- [Railway](https://railway.app)
+- [Vercel](https://vercel.com)
 
 ## Development
 

@@ -97,29 +97,49 @@ export default function Root() {
           <footer className="text-sm pt-24 text-center text-neutral-200/80 flex flex-col items-center justify-start gap-2">
             <p>
               This project was build for the [
-              <Anchor href="" target="_blank" rel="noopener noreferrer">
+              <Anchor
+                href="https://planetscale.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 PlanetScale
               </Anchor>{" "}
               x{" "}
-              <Anchor href="" target="_blank" rel="noopener noreferrer">
+              <Anchor
+                href="https://hashnode.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Hashnode
               </Anchor>
               ] hackathon in July 2022.
             </p>
             <p>
               Launch blog published on{" "}
-              <Anchor href="..." target="_blank" rel="noopener noreferrer">
+              <Anchor
+                href="https://namanvyas.hashnode.dev/introducing-braintra-a-beautiful-qna-platform"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Hashnode
               </Anchor>
               .
             </p>
             <p>
               Build by{" "}
-              <Anchor href="" target="_blank" rel="noopener noreferrer">
+              <Anchor
+                href="https://vaibhavacharya.github.io"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Vaibhav Acharya
               </Anchor>{" "}
               and{" "}
-              <Anchor href="" target="_blank" rel="noopener noreferrer">
+              <Anchor
+                href="https://namanvyas.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Naman Vyas
               </Anchor>
               .
